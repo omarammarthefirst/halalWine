@@ -29,7 +29,7 @@ enum Rosetta {
         let script = "do shell script \"/usr/sbin/softwareupdate --install-rosetta --agree-to-license\" with administrator privileges"
         await MainActor.run {
             var error: NSDictionary?
-            NSAppleScript(source: script)?.executeAndReturnError(&error)
+            _ = NSAppleScript(source: script)?.executeAndReturnError(&error)
         }
         return isInstalled
     }
@@ -53,7 +53,7 @@ enum WindowProbe {
                   let layer = info[kCGWindowLayer as String] as? Int, layer == 0,
                   let number = info[kCGWindowNumber as String] as? CGWindowID,
                   let boundsDict = info[kCGWindowBounds as String] as? NSDictionary,
-                  let bounds = CGRect(dictionaryRepresentation: boundsDict),
+                  let bounds = CGRect(dictionaryRepresentation: boundsDict as CFDictionary),
                   bounds.width >= 200, bounds.height >= 150 else { continue }
             let belongs: Bool
             if let cached = owners[pid] {

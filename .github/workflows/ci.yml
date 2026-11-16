@@ -31,6 +31,8 @@ jobs:
         run: swift test
       - name: Build app and disk image
         run: scripts/build-app.sh
+      - name: Smoke-test the packaged app
+        run: scripts/smoke-test-app.sh
       - uses: actions/upload-artifact@v4
         with:
           name: halalWine-dmg

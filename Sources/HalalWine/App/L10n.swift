@@ -2,9 +2,14 @@ import Foundation
 import HalalWineCore
 import SwiftUI
 
+/// The app's own resource bundle (translations), found inside the .app.
+enum AppResources {
+    static let bundle: Bundle = ResourceLocator.find("halalWine_HalalWine") ?? Bundle.module
+}
+
 /// Looks up a translated string (Resources/<lang>.lproj/Localizable.strings).
 func L(_ key: String) -> String {
-    NSLocalizedString(key, bundle: .module, comment: "")
+    NSLocalizedString(key, bundle: AppResources.bundle, comment: "")
 }
 
 func L(_ key: String, _ arguments: CVarArg...) -> String {
@@ -43,7 +48,7 @@ enum AppLanguage: String, CaseIterable, Identifiable {
 
     /// The language the strings are actually being shown in.
     static var effectiveCode: String {
-        let code = Bundle.module.preferredLocalizations.first ?? "en"
+        let code = AppResources.bundle.preferredLocalizations.first ?? "en"
         return code.hasPrefix("ar") ? "ar" : "en"
     }
 

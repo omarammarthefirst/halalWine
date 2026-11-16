@@ -47,7 +47,7 @@ public struct RuleSet: Codable, Sendable, Equatable {
 
     /// Rules shipped inside the app.
     public static func bundled() -> RuleSet {
-        guard let url = Bundle.module.url(forResource: "rules", withExtension: "json"),
+        guard let url = CoreResources.bundle.url(forResource: "rules", withExtension: "json"),
               let data = try? Data(contentsOf: url),
               let rules = try? JSONDecoder().decode(RuleSet.self, from: data)
         else { fatalError("Bundled rules.json is missing or invalid") }
