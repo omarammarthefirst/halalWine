@@ -59,7 +59,7 @@ final class AppModel {
     }
 
     func refreshRules() async {
-        guard let data = try? await URLSession.shared.data(from: RuleSet.remoteURL).0,
+        guard let data = try? await HTTP.get(RuleSet.remoteURL),
               let remote = try? JSONDecoder().decode(RuleSet.self, from: data),
               remote.version > rules.version else { return }
         try? data.write(to: paths.cachedRules, options: .atomic)
@@ -128,7 +128,15 @@ final class AppModel {
                 setup.error = L("setup.runtime.notPublished")
             } catch {
                 setup.isWorking = false
-                setup.error = L("setup.runtime.failed", error.localizedDescription)
+                let detail = "\(error)"
+                switch setup.phase {
+                case .preparing:
+                    setup.error = L("setup.runtime.prepareFailed", paths.logs.path, detail)
+                case .installing:
+                    setup.error = L("setup.runtime.installFailed", detail)
+                default:
+                    setup.error = L("setup.runtime.failed", detail)
+                }
             }
         }
     }

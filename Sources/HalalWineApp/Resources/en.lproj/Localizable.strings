@@ -29,6 +29,8 @@
 "setup.runtime.preparing" = "Preparing the Windows environment. This takes about a minute the first time…";
 "setup.runtime.notPublished" = "No Windows engine has been published yet. Please try again later.";
 "setup.runtime.failed" = "The download failed: %@";
+"setup.runtime.installFailed" = "The engine was downloaded but could not be installed: %@";
+"setup.runtime.prepareFailed" = "Preparing the Windows environment failed. The log is in %1$@. (%2$@)";
 "setup.done.title" = "You're All Set";
 "setup.done.subtitle" = "Drag a Windows game folder, .exe or installer into the window to add it to your library.";
 "setup.done.open" = "Open My Library";

@@ -235,10 +235,18 @@ public final class RuntimeStore {
     }
 }
 
-enum HTTP {
-    static func get(_ url: URL) async throws -> Data {
+public enum HTTP {
+    /// Adds a throwaway query so CDN caches (raw.githubusercontent.com keeps
+    /// files for ~5 minutes) never hand out a stale manifest or rule file.
+    public static func freshURL(_ url: URL) -> URL {
+        guard var parts = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return url }
+        parts.queryItems = (parts.queryItems ?? []) + [URLQueryItem(name: "t", value: String(Int(Date().timeIntervalSince1970)))]
+        return parts.url ?? url
+    }
+
+    public static func get(_ url: URL) async throws -> Data {
         try await withCheckedThrowingContinuation { continuation in
-            var request = URLRequest(url: url)
+            var request = URLRequest(url: freshURL(url))
             request.cachePolicy = .reloadIgnoringLocalCacheData
             URLSession.shared.dataTask(with: request) { data, response, error in
                 if let error { return continuation.resume(throwing: error) }

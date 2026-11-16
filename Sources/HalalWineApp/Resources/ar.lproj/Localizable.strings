@@ -29,6 +29,8 @@
 "setup.runtime.preparing" = "جارٍ تجهيز بيئة ويندوز. يستغرق ذلك نحو دقيقة في المرة الأولى…";
 "setup.runtime.notPublished" = "لم يُنشر محرّك ويندوز بعد. يُرجى المحاولة لاحقًا.";
 "setup.runtime.failed" = "فشل التنزيل: %@";
+"setup.runtime.installFailed" = "نُزّل المحرّك لكن تعذّر تثبيته: %@";
+"setup.runtime.prepareFailed" = "تعذّر تجهيز بيئة ويندوز. السجل موجود في %1$@. (%2$@)";
 "setup.done.title" = "كل شيء جاهز";
 "setup.done.subtitle" = "اسحب مجلد لعبة ويندوز أو ملف ‎.exe‎ أو ملف التثبيت إلى النافذة لإضافته إلى مكتبتك.";
 "setup.done.open" = "افتح مكتبتي";
