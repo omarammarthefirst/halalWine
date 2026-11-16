@@ -27,10 +27,10 @@ var targets: [Target] = [
 
 #if os(macOS)
 // The SwiftUI app only builds on macOS.
-products.append(.executable(name: "HalalWine", targets: ["HalalWine"]))
+products.append(.executable(name: "HalalWineApp", targets: ["HalalWineApp"]))
 targets.append(
     .executableTarget(
-        name: "HalalWine",
+        name: "HalalWineApp",
         dependencies: ["HalalWineCore"],
         resources: [.process("Resources")]
     )

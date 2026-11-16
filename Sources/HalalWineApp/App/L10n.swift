@@ -4,7 +4,7 @@ import SwiftUI
 
 /// The app's own resource bundle (translations), found inside the .app.
 enum AppResources {
-    static let bundle: Bundle = ResourceLocator.find("halalWine_HalalWine") ?? Bundle.module
+    static let bundle: Bundle = ResourceLocator.find("halalWine_HalalWineApp") ?? Bundle.module
 }
 
 /// Looks up a translated string (Resources/<lang>.lproj/Localizable.strings).

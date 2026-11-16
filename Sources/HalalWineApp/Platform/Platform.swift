@@ -152,6 +152,7 @@ enum D3DMetalImport {
 /// Bundles logs and the detection report into a zip on the Desktop so users
 /// can send it when asking for help.
 enum Diagnostics {
+    @MainActor
     static func export(game: GameRecord, plan: LaunchPlan, model: AppModel) async throws -> URL {
         let fm = FileManager.default
         let safeName = game.name.components(separatedBy: CharacterSet.alphanumerics.inverted).filter { !$0.isEmpty }.joined(separator: "-")

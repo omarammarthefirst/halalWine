@@ -12,7 +12,7 @@
 	<key>CFBundleAllowMixedLocalizations</key>
 	<true/>
 	<key>CFBundleExecutable</key>
-	<string>HalalWine</string>
+	<string>HalalWineApp</string>
 	<key>CFBundleIdentifier</key>
 	<string>io.github.omarammarthefirst.halalwine</string>
 	<key>CFBundleName</key>

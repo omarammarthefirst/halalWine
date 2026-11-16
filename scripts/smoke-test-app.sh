@@ -13,7 +13,7 @@ echo "$OUTPUT"
 echo "$OUTPUT" | grep -q "Engine:       godot 4.5.0"
 echo "$OUTPUT" | grep -Eq "1\. d3dmetal +--rendering-driver d3d12"
 
-"$APP/Contents/MacOS/HalalWine" &
+"$APP/Contents/MacOS/HalalWineApp" &
 PID=$!
 sleep 12
 if kill -0 "$PID" 2>/dev/null; then

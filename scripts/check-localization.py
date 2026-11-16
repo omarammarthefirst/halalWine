@@ -4,7 +4,7 @@ that format specifiers match between languages."""
 import re, sys, pathlib
 
 root = pathlib.Path(__file__).resolve().parent.parent
-app = root / "Sources" / "HalalWine"
+app = root / "Sources" / "HalalWineApp"
 used = set()
 for swift in app.rglob("*.swift"):
     text = swift.read_text(encoding="utf-8")

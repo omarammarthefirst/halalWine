@@ -118,7 +118,7 @@ For downloads that open without Gatekeeper warnings, you need an Apple Developer
 | `Sources/HalalWineCore/Plan` | Data-driven launch rules and planner |
 | `Sources/HalalWineCore/Runtime` | Runtime manifest/installer, per-backend Wine variants (APFS clones), D3DMetal import |
 | `Sources/HalalWineCore/Run` | Prefix templates, launch command builder, session supervisor, log doctor, dependency installer |
-| `Sources/HalalWine` | SwiftUI app (setup assistant, library, launch verification, settings) |
+| `Sources/HalalWineApp` | SwiftUI app (setup assistant, library, launch verification, settings) |
 | `Sources/halalwine` | Command-line tool |
 
 See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for details.

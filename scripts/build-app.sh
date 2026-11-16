@@ -15,13 +15,13 @@ ARCH="${ARCH:-arm64}"
 APP="dist/halalWine.app"
 
 echo "▶ Building halalWine $VERSION ($ARCH)"
-swift build -c release --arch "$ARCH" --product HalalWine
+swift build -c release --arch "$ARCH" --product HalalWineApp
 swift build -c release --arch "$ARCH" --product halalwine
 BIN="$(swift build -c release --arch "$ARCH" --show-bin-path)"
 
 rm -rf dist
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
-cp "$BIN/HalalWine" "$APP/Contents/MacOS/HalalWine"
+cp "$BIN/HalalWineApp" "$APP/Contents/MacOS/HalalWineApp"
 cp "$BIN/halalwine" "$APP/Contents/MacOS/halalwine"
 # SwiftPM resource bundles (translations, rules.json).
 for bundle in "$BIN"/*.bundle; do cp -R "$bundle" "$APP/Contents/Resources/"; done

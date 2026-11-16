@@ -1,7 +1,7 @@
 # Architecture
 
 ```
-┌──────────── HalalWine (SwiftUI app) ────────────┐      halalwine (CLI)
+┌───────── HalalWineApp (SwiftUI app) ───────────┐      halalwine (CLI)
 │ Setup assistant · Library · Launch verification  │          │
 │ Settings · D3DMetal import · Diagnostics         │          │
 └──────────────────────┬───────────────────────────┘          │
