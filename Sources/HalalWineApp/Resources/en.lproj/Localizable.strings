@@ -21,7 +21,7 @@
 "setup.rosetta.installing" = "Installing Rosetta…";
 "setup.rosetta.failed" = "Rosetta could not be installed. Check your internet connection and try again.";
 "setup.runtime.title" = "Download the Windows Engine";
-"setup.runtime.subtitle" = "halalWine needs its Windows engine (Wine with Metal graphics layers). It is about 250 MB and only downloads once.";
+"setup.runtime.subtitle" = "halalWine needs its Windows engine (Wine with Metal graphics layers). It is a few hundred MB and only downloads once.";
 "setup.runtime.download" = "Download";
 "setup.runtime.progress" = "%1$@ of %2$@";
 "setup.runtime.connecting" = "Connecting…";

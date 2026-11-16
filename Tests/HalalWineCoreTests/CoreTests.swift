@@ -278,6 +278,38 @@ final class RuntimeTests: XCTestCase {
         XCTAssertEqual(try String(contentsOf: metal.appendingPathComponent("lib/wine/x86_64-windows/d3d12.dll"), encoding: .utf8), "d3dmetal")
     }
 
+    func testNativeDXMTFromCrossOverBasedWine() throws {
+        let root = try Fixtures.tree([
+            "wine/bin/wine": [0],
+            "wine/lib/wine/x86_64-unix/winemetal.so": [1],
+            "components/dxmt/x64/d3d11.dll": Array("dxmt64".utf8),
+            "components/dxmt/x64/dxgi.dll": [2],
+            "components/dxmt/x64/d3d10core.dll": [3],
+            "components/dxmt/x64/winemetal.dll": [4],
+            "components/dxmt/x64/nvngx.dll": [5],
+            "components/dxmt/x32/d3d11.dll": Array("dxmt32".utf8),
+        ], folderName: "rt-cx")
+        let runtime = InstalledRuntime(root: root, info: RuntimeInfo(version: "2026.11.16.1", wineVersion: "11.19", components: [:]))
+        XCTAssertEqual(runtime.dxmtLayout, .native)
+        XCTAssertTrue(runtime.availableBackends.contains(.dxmt))
+        // No variant tree: DXMT runs on the base Wine with native DLLs.
+        XCTAssertEqual(try runtime.wineRoot(for: .dxmt), runtime.baseWine)
+        XCTAssertEqual(BackendSetup.overridesString(BackendSetup.dllOverrides(for: .dxmt, runtime: runtime)),
+                       "d3d10core=n,b;d3d11=n,b;d3d12=b;d3d9=b;dxgi=n,b")
+
+        let prefix = try Fixtures.tree(["drive_c/windows/system32/d3d11.dll": Array("wine".utf8),
+                                        "drive_c/windows/syswow64/kernel32.dll": [0]], folderName: "pfx")
+        try BackendSetup.prepare(prefix: prefix, backend: .dxmt, runtime: runtime)
+        let sys32 = prefix.appendingPathComponent("drive_c/windows/system32")
+        XCTAssertEqual(try String(contentsOf: sys32.appendingPathComponent("d3d11.dll"), encoding: .utf8), "dxmt64")
+        XCTAssertTrue(FileOps.exists(sys32.appendingPathComponent("winemetal.dll")))
+        XCTAssertFalse(FileOps.exists(sys32.appendingPathComponent("nvngx.dll")), "NVIDIA shims are not installed")
+        XCTAssertEqual(try String(contentsOf: prefix.appendingPathComponent("drive_c/windows/syswow64/d3d11.dll"), encoding: .utf8), "dxmt32")
+
+        // WineD3D afterwards forces Wine's own DLLs even though DXMT's are in system32.
+        XCTAssertEqual(BackendSetup.dllOverrides(for: .wined3d, runtime: runtime)["d3d11"], "b")
+    }
+
     func testStoreListsNewestFirst() throws {
         let paths = AppPaths(root: try Fixtures.tree([
             "Runtimes/11.9-1/runtime.json": Array(#"{"version":"11.9-1","wineVersion":"11.9","components":{}}"#.utf8),

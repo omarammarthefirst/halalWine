@@ -7,14 +7,16 @@ release includes a `NOTICE.txt` with exact versions and source links.
 
 | Component | License | Source |
 |---|---|---|
-| Wine (macOS builds by Gcenx) | GNU LGPL 2.1 or later | https://gitlab.winehq.org/wine/wine · builds: https://github.com/Gcenx/macOS_Wine_builds |
+| Wine, built from CrossOver's sources (engine from the Whisky fork) | GNU LGPL 2.1 or later | https://github.com/frankea/winecx-gptk · https://www.codeweavers.com/crossover/source · engine: https://github.com/frankea/Whisky/releases |
+| GStreamer, FFmpeg and other media libraries bundled with that engine | LGPL / GPL (per library) | see the engine's release notes and https://github.com/frankea/Whisky |
 | DXMT | zlib | https://github.com/3Shain/dxmt |
 | DXVK-macOS | zlib | https://github.com/Gcenx/DXVK-macOS |
 | MoltenVK | Apache 2.0 | https://github.com/KhronosGroup/MoltenVK |
 | wine-mono | MIT and others | https://gitlab.winehq.org/wine-mono/wine-mono |
 | wine-gecko | MPL 2.0 | https://gitlab.winehq.org/wine/wine-gecko |
 
-**LGPL compliance:** Wine is distributed unmodified as built by Gcenx. Its
+**LGPL/GPL compliance:** Wine and its bundled libraries are redistributed
+unmodified from the engine named in each runtime's `NOTICE.txt`. Their
 complete source code is available at the links above for the exact version
 named in each runtime's `NOTICE.txt`. If you modify Wine for your own runtime,
 publish your patches alongside the release.

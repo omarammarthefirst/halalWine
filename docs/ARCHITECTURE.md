@@ -33,6 +33,19 @@
 | `Games/` | Games cloned into the library ("keep games inside halalWine") |
 | `Logs/`, `Icons/`, `Cache/`, `library.json` | |
 
+## Which Wine?
+
+The runtime uses Wine built from CrossOver's open-source code (currently the
+engine published by the maintained Whisky fork). DXMT draws into game windows
+through CrossOver's Mac driver (`winemac.so` must export `macdrv_functions`);
+upstream Wine builds hide those functions, so DXMT cannot work there.
+`scripts/build-runtime.sh` checks this and refuses to publish a runtime
+without it.
+
+In that runtime DXMT ships as native DLLs (`components/dxmt/{x64,x32}`). They
+are copied into the prefix's system32/syswow64 with `n,b` overrides, and
+`winemetal` stays a Wine built-in.
+
 ## Why backend variants?
 
 DXMT's release ships as Wine *built-in* DLLs (its guide puts `d3d11.dll`,

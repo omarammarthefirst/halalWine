@@ -63,10 +63,25 @@ public struct InstalledRuntime: Sendable, Equatable {
     var variants: URL { root.appendingPathComponent("variants", isDirectory: true) }
     static let variantMarker = ".halalwine-variant"
 
-    public var hasDXMT: Bool {
-        FileOps.exists(dxmtComponent.appendingPathComponent("x86_64-windows/d3d11.dll"))
-            && FileOps.exists(dxmtComponent.appendingPathComponent("x86_64-unix/winemetal.so"))
+    /// How DXMT is packaged in this runtime.
+    public enum DXMTLayout: Sendable { case none, builtin, native }
+
+    /// `native`: DXMT's d3d11/dxgi/d3d10core in components/dxmt/{x64,x32}
+    /// are copied into the prefix (needs a CrossOver-based Wine that ships
+    /// winemetal.so). `builtin`: DXMT replaces Wine's DLLs in a variant tree.
+    public var dxmtLayout: DXMTLayout {
+        if FileOps.exists(dxmtComponent.appendingPathComponent("x64/d3d11.dll")),
+           FileOps.exists(baseWine.appendingPathComponent("lib/wine/x86_64-unix/winemetal.so")) {
+            return .native
+        }
+        if FileOps.exists(dxmtComponent.appendingPathComponent("x86_64-windows/d3d11.dll")),
+           FileOps.exists(dxmtComponent.appendingPathComponent("x86_64-unix/winemetal.so")) {
+            return .builtin
+        }
+        return .none
     }
+
+    public var hasDXMT: Bool { dxmtLayout != .none }
 
     public var hasDXVK: Bool { !FileOps.files(in: dxvkComponent.appendingPathComponent("x64"), withExtension: "dll").isEmpty }
 
@@ -98,7 +113,7 @@ public struct InstalledRuntime: Sendable, Equatable {
         case .wined3d, .dxvk:
             return baseWine
         case .dxmt:
-            return try ensureDXMTVariant()
+            return dxmtLayout == .builtin ? try ensureDXMTVariant() : baseWine
         case .d3dmetal:
             guard hasD3DMetal else { throw RuntimeError.d3dmetalNotInstalled }
             return variants.appendingPathComponent("d3dmetal", isDirectory: true)
@@ -133,6 +148,19 @@ public struct InstalledRuntime: Sendable, Equatable {
         try? FileManager.default.removeItem(at: target)
         try FileOps.cloneItem(at: baseWine, to: target)
         try FileOps.mergeContents(of: redistLib, into: target.appendingPathComponent("lib"))
+        // libd3dshared finds D3DMetal.framework through @loader_path, so the
+        // Unix-side DirectX libraries must be symlinks into lib/external,
+        // never copies (as documented by the CrossOver-based engine).
+        let external = target.appendingPathComponent("lib/external/libd3dshared.dylib")
+        if FileOps.exists(external) {
+            let unixDir = target.appendingPathComponent("lib/wine/x86_64-unix")
+            for name in ["d3d10", "d3d11", "d3d12", "dxgi"] {
+                let link = unixDir.appendingPathComponent("\(name).so")
+                try? FileManager.default.removeItem(at: link)
+                try FileManager.default.createSymbolicLink(atPath: link.path,
+                                                           withDestinationPath: "../../external/libd3dshared.dylib")
+            }
+        }
         try "\(info.version)|gptk".write(to: target.appendingPathComponent(Self.variantMarker), atomically: true, encoding: .utf8)
     }
 

@@ -27,12 +27,12 @@
 2. افتح الملف واسحب **حلال واين** إلى مجلد **التطبيقات**.
 3. افتح التطبيق. سيرشدك معالج الإعداد إلى:
    - تثبيت **Rosetta** من Apple (إن لم يكن مثبتًا)،
-   - تنزيل **محرّك ويندوز** (نحو ٢٥٠ ميغابايت، مرة واحدة فقط).
+   - تنزيل **محرّك ويندوز** (بضع مئات من الميغابايتات، مرة واحدة فقط).
 4. اسحب مجلد لعبتك إلى النافذة واضغط **العب**.
 
 > إن ظهرت رسالة بأن macOS لا يستطيع التحقق من التطبيق: افتح **إعدادات النظام ← الخصوصية والأمن** واضغط **فتح على أي حال**.
 
-**المتطلبات:** جهاز ماك بمعالج Apple (M1 أو أحدث) ونظام macOS 14 (Sonoma) أو أحدث، ويُنصح بـ macOS 15.
+**المتطلبات:** جهاز ماك بمعالج Apple (M1 أو أحدث) ونظام macOS 15 (Sequoia) أو أحدث.
 
 ## كيف يختار الإعدادات؟
 
@@ -83,9 +83,9 @@ Built on Wine, DXMT, DXVK and MoltenVK. Arabic and English, with full right-to-l
 
 1. Download the latest `halalWine-x.y.z.dmg` from [Releases](https://github.com/omarammarthefirst/halalWine/releases).
 2. Drag it to Applications and open it.
-3. The setup assistant installs Rosetta and downloads the Windows engine (≈250 MB, once), like WhiskyWine.
+3. The setup assistant installs Rosetta and downloads the Windows engine (a few hundred MB, once), like WhiskyWine.
 
-Requires an Apple Silicon Mac with macOS 14 or later; macOS 15 is recommended for AVX support.
+Requires an Apple Silicon Mac with macOS 15 or later.
 
 ### Build from source
 

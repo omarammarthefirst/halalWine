@@ -32,9 +32,14 @@ public final class WineSession: @unchecked Sendable {
 
     public func start() throws {
         try FileManager.default.createDirectory(at: logURL.deletingLastPathComponent(), withIntermediateDirectories: true)
-        _ = FileManager.default.createFile(atPath: logURL.path, contents: nil)
+        // Append, so every attempt of one Play press stays in the log.
+        if !FileManager.default.fileExists(atPath: logURL.path) {
+            _ = FileManager.default.createFile(atPath: logURL.path, contents: nil)
+        }
         logHandle = try FileHandle(forWritingTo: logURL)
-        let header = "$ \(command.executable.path) \(command.arguments.joined(separator: " "))\n"
+        _ = try? logHandle?.seekToEnd()
+        let header = "\n===== \(ISO8601DateFormatter().string(from: startedAt)) =====\n"
+            + "$ \(command.executable.path) \(command.arguments.joined(separator: " "))\n"
             + "WINEDLLOVERRIDES=\(command.environment["WINEDLLOVERRIDES"] ?? "")\n\n"
         logHandle?.write(Data(header.utf8))
 

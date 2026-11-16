@@ -21,7 +21,7 @@
 "setup.rosetta.installing" = "جارٍ تثبيت Rosetta…";
 "setup.rosetta.failed" = "تعذّر تثبيت Rosetta. تحقّق من اتصالك بالإنترنت ثم حاول مرة أخرى.";
 "setup.runtime.title" = "تنزيل محرّك ويندوز";
-"setup.runtime.subtitle" = "يحتاج حلال واين إلى محرّك ويندوز الخاص به (Wine مع طبقات رسوميات Metal). حجمه نحو ٢٥٠ ميغابايت ويُنزَّل مرة واحدة فقط.";
+"setup.runtime.subtitle" = "يحتاج حلال واين إلى محرّك ويندوز الخاص به (Wine مع طبقات رسوميات Metal). حجمه بضع مئات من الميغابايتات ويُنزَّل مرة واحدة فقط.";
 "setup.runtime.download" = "تنزيل";
 "setup.runtime.progress" = "%1$@ من %2$@";
 "setup.runtime.connecting" = "جارٍ الاتصال…";

@@ -40,7 +40,7 @@ targets.append(
 let package = Package(
     name: "halalWine",
     defaultLocalization: "en",
-    platforms: [.macOS(.v14)],
+    platforms: [.macOS("15.0")],
     products: products,
     targets: targets
 )

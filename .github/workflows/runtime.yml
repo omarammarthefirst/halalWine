@@ -5,20 +5,17 @@ name: Publish Windows engine (runtime)
 on:
   workflow_dispatch:
     inputs:
+      source:
+        description: "whisky = CrossOver-based Wine with working DXMT (recommended); gcenx = upstream Wine"
+        default: "whisky"
+      whisky_engine_tag:
+        description: "frankea/Whisky 'Wine Libraries' release tag"
+        default: "v4.8.3"
       wine_version:
-        description: "Gcenx macOS Wine build tag (e.g. 11.21)"
+        description: "gcenx only: Gcenx macOS Wine build tag"
         default: "11.21"
-      wine_flavor:
-        description: "devel or staging"
-        default: "devel"
-      dxmt_version:
-        description: "DXMT release tag"
-        default: "v0.80"
-      dxvk_tag:
-        description: "DXVK-macOS release tag (empty = skip)"
-        default: "v1.10.3-20230507"
       revision:
-        description: "Runtime revision (bump to republish the same Wine version)"
+        description: "Bump to publish twice on the same day"
         default: "1"
 
 permissions:
@@ -34,10 +31,9 @@ jobs:
       - name: Build runtime
         env:
           GH_TOKEN: ${{ github.token }}
+          SOURCE: ${{ inputs.source }}
+          WHISKY_ENGINE_TAG: ${{ inputs.whisky_engine_tag }}
           WINE_VERSION: ${{ inputs.wine_version }}
-          WINE_FLAVOR: ${{ inputs.wine_flavor }}
-          DXMT_VERSION: ${{ inputs.dxmt_version }}
-          DXVK_TAG: ${{ inputs.dxvk_tag }}
           REVISION: ${{ inputs.revision }}
         run: scripts/build-runtime.sh
       - name: Publish release

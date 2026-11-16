@@ -87,6 +87,8 @@ final class LaunchController {
         guard !game.isMissing else { phase = .blocked(.missingFiles); return }
 
         phase = .preparing
+        // One log per Play press; every attempt is appended to it.
+        try? FileManager.default.removeItem(at: model.paths.logs.appendingPathComponent("\(gameID.uuidString).log"))
         let plan = model.plan(for: game)
         let configs = forcing.map { [$0] } ?? plan.configs
         guard !configs.isEmpty else { phase = .failed; return }
@@ -171,6 +173,7 @@ final class LaunchController {
         var windowID: UInt32?
         var blackSamples = 0
         var lastBlackCheck = Date.distantPast
+        var rendererWarningAt: Date?
 
         while true {
             try? await Task.sleep(nanoseconds: 500_000_000)
@@ -186,9 +189,9 @@ final class LaunchController {
                 lastDiagnosis = finding
                 switch finding {
                 case .rendererFailed:
-                    await session.terminate()
-                    await waitForEnd()
-                    return .failed
+                    // Engines often print this and then fall back to another
+                    // renderer (Godot switches to ANGLE). Give it time.
+                    if rendererWarningAt == nil { rendererWarningAt = Date() }
                 case .needsAVX where !game.advertiseAVX:
                     model.update(game.id) { $0.advertiseAVX = true }
                     await session.terminate()
@@ -225,6 +228,13 @@ final class LaunchController {
                     await waitForEnd(timeout: nil)
                     return .worked
                 }
+                await session.terminate()
+                await waitForEnd()
+                return .failed
+            }
+
+            // A renderer warning with no window after 20 s: this setup failed.
+            if let warned = rendererWarningAt, windowSeenAt == nil, Date().timeIntervalSince(warned) > 20 {
                 await session.terminate()
                 await waitForEnd()
                 return .failed
