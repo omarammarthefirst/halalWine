@@ -33,15 +33,22 @@ final class AppModel {
     var metalHUD: Bool { UserDefaults.standard.bool(forKey: Prefs.metalHUD) }
 
     private init() {
-        try? paths.ensureDirectories()
-        runtimeStore = RuntimeStore(paths: paths)
-        library = GameLibrary(paths: paths)
-        rules = RuleSet.best(cached: paths.cachedRules)
-        runtime = runtimeStore.current
-        let ready = runtime.map { PrefixManager(paths: paths).isTemplateReady(for: $0) } ?? false
+        // Work on locals first: @Observable does not allow reading `self`
+        // before every stored property is initialized.
+        let dataPaths = AppPaths()
+        try? dataPaths.ensureDirectories()
+        let store = RuntimeStore(paths: dataPaths)
+        let loadedLibrary = GameLibrary(paths: dataPaths)
+        let installed = store.current
+        let ready = installed.map { PrefixManager(paths: dataPaths).isTemplateReady(for: $0) } ?? false
+
+        runtimeStore = store
+        library = loadedLibrary
+        rules = RuleSet.best(cached: dataPaths.cachedRules)
+        runtime = installed
         showSetup = !(ready && !Rosetta.isNeeded)
-        games = library.games
-        selection = games.first?.id
+        games = loadedLibrary.games
+        selection = loadedLibrary.games.first?.id
     }
 
     // MARK: - Lifecycle
