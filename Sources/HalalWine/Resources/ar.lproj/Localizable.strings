@@ -1,0 +1,177 @@
+/* حلال واين — العربية */
+
+"app.name" = "حلال واين";
+"menu.addGame" = "إضافة لعبة…";
+
+/* عام */
+"common.ok" = "حسنًا";
+"common.cancel" = "إلغاء";
+"common.close" = "إغلاق";
+"common.tryAgain" = "حاول مرة أخرى";
+"common.save" = "حفظ";
+"error.title" = "حدث خطأ ما";
+
+/* الإعداد الأولي */
+"setup.welcome.title" = "أهلًا بك في حلال واين";
+"setup.welcome.subtitle" = "العب ألعاب ويندوز وشغّل برامجه على جهاز الماك. فقط اسحب مجلد اللعبة إلى هنا، وحلال واين يتكفّل بالباقي.";
+"setup.welcome.start" = "لنبدأ";
+"setup.rosetta.title" = "تثبيت Rosetta";
+"setup.rosetta.subtitle" = "برامج ويندوز مصمَّمة لمعالجات Intel، وأداة Rosetta المجانية من Apple تتيح لجهازك تشغيلها. قد يُطلب منك إدخال كلمة السر.";
+"setup.rosetta.install" = "تثبيت Rosetta";
+"setup.rosetta.installing" = "جارٍ تثبيت Rosetta…";
+"setup.rosetta.failed" = "تعذّر تثبيت Rosetta. تحقّق من اتصالك بالإنترنت ثم حاول مرة أخرى.";
+"setup.runtime.title" = "تنزيل محرّك ويندوز";
+"setup.runtime.subtitle" = "يحتاج حلال واين إلى محرّك ويندوز الخاص به (Wine مع طبقات رسوميات Metal). حجمه نحو ٢٥٠ ميغابايت ويُنزَّل مرة واحدة فقط.";
+"setup.runtime.download" = "تنزيل";
+"setup.runtime.progress" = "%1$@ من %2$@";
+"setup.runtime.connecting" = "جارٍ الاتصال…";
+"setup.runtime.installing" = "جارٍ التثبيت…";
+"setup.runtime.preparing" = "جارٍ تجهيز بيئة ويندوز. يستغرق ذلك نحو دقيقة في المرة الأولى…";
+"setup.runtime.notPublished" = "لم يُنشر محرّك ويندوز بعد. يُرجى المحاولة لاحقًا.";
+"setup.runtime.failed" = "فشل التنزيل: %@";
+"setup.done.title" = "كل شيء جاهز";
+"setup.done.subtitle" = "اسحب مجلد لعبة ويندوز أو ملف ‎.exe‎ أو ملف التثبيت إلى النافذة لإضافته إلى مكتبتك.";
+"setup.done.open" = "افتح مكتبتي";
+
+/* الأخطاء */
+"error.save" = "تعذّر حفظ مكتبتك: %@";
+"error.noWindowsProgram" = "«%@» لا يحتوي على برنامج ويندوز (‎.exe‎).";
+"error.import" = "تعذّرت إضافة «%1$@»: %2$@";
+"error.installerNoGame" = "انتهى برنامج التثبيت، لكن لم نعثر على اللعبة المثبَّتة. يمكنك سحب مجلد اللعبة المثبَّتة بنفسك.";
+"error.installer" = "تعذّر تشغيل برنامج التثبيت: %@";
+"error.diagnostics" = "تعذّر إنشاء ملف التشخيص: %@";
+
+/* المكتبة */
+"library.title" = "المكتبة";
+"library.add" = "إضافة لعبة…";
+"library.add.prompt" = "إضافة";
+"library.add.message" = "اختر مجلد لعبة أو ملف ‎.exe‎ أو برنامج تثبيت أو ملف ‎.zip‎";
+"library.drop.title" = "أفلت لعبة ويندوز هنا";
+"library.drop.subtitle" = "اسحب مجلد اللعبة أو ملف ‎.exe‎ أو برنامج التثبيت أو ملف ‎.zip‎ إلى هذه النافذة. يتعرّف حلال واين على محرّك اللعبة ويختار أفضل إعدادات الرسوميات تلقائيًا.";
+"library.drop.release" = "أفلِت للإضافة";
+"library.importing" = "جارٍ إضافة «%@»…";
+"library.status.running" = "قيد التشغيل";
+"library.status.installing" = "جارٍ التثبيت…";
+"library.status.missing" = "الملفات مفقودة";
+"library.status.ready" = "جاهزة للعب";
+
+/* اللعبة */
+"game.play" = "العب";
+"game.showInFinder" = "إظهار في Finder";
+"game.remove" = "إزالة من المكتبة";
+"game.remove.title" = "هل تريد إزالة «%@»؟";
+"game.remove.message" = "ستُحذف إعدادات ويندوز الخاصة بها والبيانات المحفوظة داخل حلال واين.";
+"game.remove.withFiles" = "إزالة وحذف ملفات اللعبة";
+"game.remove.keepFiles" = "إزالة مع الاحتفاظ بملفات اللعبة";
+"game.blocked.title" = "على الأرجح لن تعمل هذه اللعبة على الماك";
+"game.blocked.tryAnyway" = "جرّب على أي حال";
+"game.missing" = "نُقلت ملفات اللعبة أو حُذفت.";
+"game.works.title" = "تعمل على هذا الماك باستخدام";
+"game.auto.title" = "إعداد تلقائي";
+"game.auto.message" = "عند الضغط على «العب» يجرّب حلال واين أفضل إعدادات الرسوميات لهذه اللعبة، ويتأكد من أنها تعمل، ويتذكّر ما نجح.";
+"game.advanced" = "خيارات متقدمة";
+"game.windowed" = "التشغيل في نافذة (يُنصح به)";
+"game.avx" = "دعم تعليمات AVX (تحتاجها بعض الألعاب الحديثة، macOS 15 أو أحدث)";
+"game.arguments" = "وسائط تشغيل إضافية";
+"game.plan.title" = "الإعدادات التي سيجرّبها حلال واين";
+"game.plan.try" = "جرّب";
+"game.plan.needsD3DMetal" = "يتطلب D3DMetal";
+"game.reset" = "نسيان الإعدادات المحفوظة";
+"game.openDriveC" = "فتح القرص C: الخاص بويندوز";
+"game.showLog" = "عرض السجل";
+"game.diagnostics" = "إنشاء ملف تشخيص";
+"game.diagnostics.working" = "جارٍ الإنشاء…";
+
+/* برامج التثبيت */
+"installer.running.title" = "جارٍ التثبيت";
+"installer.running.message" = "اتّبع الخطوات في نافذة برنامج التثبيت، وسيعثر حلال واين على اللعبة عند الانتهاء.";
+"installer.notInstalled" = "هذا برنامج تثبيت. شغّله لتثبيت اللعبة.";
+"installer.run" = "تشغيل برنامج التثبيت";
+
+/* التشغيل */
+"launch.preparing.title" = "جارٍ التجهيز";
+"launch.preparing.message" = "نجهّز بيئة ويندوز لهذه اللعبة…";
+"launch.installing.title" = "تثبيت مكوّن ناقص";
+"launch.installing.message" = "تحتاج اللعبة إلى %@، وجارٍ تثبيته الآن…";
+"launch.searching.title" = "نبحث عن أفضل الإعدادات";
+"launch.attempt" = "المحاولة %1$@ من %2$@";
+"launch.confirm.title" = "هل تعمل اللعبة؟";
+"launch.confirm.message" = "انظر إلى نافذة اللعبة. إن رأيت اللعبة (وليست شاشة سوداء أو متجمّدة) فاختر «نعم».";
+"launch.confirm.yes" = "نعم، تعمل";
+"launch.confirm.no" = "لا، جرّب إعدادات أخرى";
+"launch.running.title" = "اللعب جارٍ";
+"launch.running.message" = "حفظ حلال واين هذه الإعدادات للمرة القادمة.";
+"launch.finished.title" = "أُغلقت اللعبة";
+"launch.finished.message" = "حُفظت الإعدادات التي نجحت. اضغط «العب» للبدء من جديد.";
+"launch.failed.title" = "تعذّر تشغيل اللعبة";
+"launch.failed.message" = "جرّب حلال واين كل الإعدادات المتاحة. أنشئ ملف تشخيص من «خيارات متقدمة» وشاركه عند طلب المساعدة.";
+"launch.blocked.title" = "لا يمكن تشغيل هذه اللعبة هنا حاليًا";
+"launch.blocked.steam" = "تحتاج هذه اللعبة إلى تشغيل Steam. شغّلها من نسخة ويندوز من Steam بدلًا من ذلك.";
+"launch.blocked.antiCheat" = "نظام مكافحة الغش في هذه اللعبة لا يعمل على الماك.";
+"launch.blocked.noRuntime" = "محرّك ويندوز غير مثبَّت. افتح الإعدادات ← المحرّك.";
+"launch.blocked.missingFiles" = "نُقلت ملفات اللعبة أو حُذفت. أزِل اللعبة ثم أضِفها من جديد.";
+"launch.stop" = "إيقاف";
+
+/* المحرّكات وطبقات الرسوميات */
+"engine.unknown" = "غير معروف";
+"backend.d3dmetal.about" = "تقنية D3DMetal من Apple تترجم DirectX 11 و12 إلى Metal، وهي الأفضل للألعاب الحديثة.";
+"backend.dxmt.about" = "تقنية DXMT تترجم DirectX 10 و11 إلى Metal. سريعة ومفتوحة المصدر ومضمَّنة.";
+"backend.dxvk.about" = "تقنية DXVK تترجم DirectX 10 و11 إلى Vulkan، ثم يشغّلها MoltenVK على Metal.";
+"backend.wined3d.about" = "المُصيِّر الخاص بـ Wine يشغّل ألعاب DirectX القديمة وOpenGL عبر OpenGL، وهو الأكثر توافقًا.";
+
+/* تنبيهات قبل اللعب */
+"flag.easyAntiCheat" = "تستخدم Easy Anti-Cheat الذي يمنع Wine، لذا لن يعمل اللعب عبر الإنترنت.";
+"flag.battlEye" = "تستخدم نظام BattlEye لمكافحة الغش، وهو يمنع Wine.";
+"flag.riotVanguard" = "تستخدم Riot Vanguard الذي لا يعمل إلا على ويندوز.";
+"flag.otherAntiCheat" = "تستخدم برنامج مكافحة غش على مستوى النواة، وهو لا يعمل على الماك.";
+"flag.usesSteam" = "تستخدم Steam. إن لم تعمل فقد تحتاج إلى تشغيلها من Steam.";
+"flag.needsPublisherLauncher" = "تحتاج إلى مشغّل الناشر (مثل Ubisoft Connect).";
+"flag.unsupportedArchitecture" = "مصمَّمة لويندوز على معالجات ARM، ولا يمكن تشغيلها هنا.";
+"flag.mayHaveMacVersion" = "الألعاب المصنوعة بهذا المحرّك تتوفّر غالبًا بنسخة للماك، فتحقّق من المتجر أولًا.";
+
+/* التشخيص */
+"diag.rendererFailed" = "لم تنجح إعدادات الرسوميات مع هذه اللعبة.";
+"diag.needsVCRedist" = "احتاجت اللعبة إلى مكتبات Microsoft Visual C++.";
+"diag.needsDirectXRuntime" = "احتاجت اللعبة إلى مكوّنات DirectX القديمة.";
+"diag.needsXNA" = "تحتاج اللعبة إلى Microsoft XNA Framework 4.0.";
+"diag.needsDotNet" = "تحتاج اللعبة إلى ‎.NET Framework.";
+"diag.needsAVX" = "تحتاج اللعبة إلى تعليمات AVX. فعّل خيار «دعم تعليمات AVX» (macOS 15 أو أحدث).";
+"diag.needsSteam" = "تحتاج اللعبة إلى تشغيل Steam.";
+"diag.antiCheat" = "رفض نظام مكافحة الغش في اللعبة العمل.";
+"diag.missingDLL" = "ينقص اللعبة الملف %@.";
+
+/* الإعدادات */
+"settings.general" = "عام";
+"settings.graphics" = "الرسوميات";
+"settings.runtime" = "المحرّك";
+"settings.about" = "حول";
+"settings.language" = "اللغة";
+"settings.language.system" = "مثل لغة macOS";
+"settings.language.restart" = "أعد تشغيل حلال واين لتغيير اللغة.";
+"settings.language.restartNow" = "إعادة التشغيل الآن";
+"settings.keepGames" = "الاحتفاظ بالألعاب المضافة داخل حلال واين";
+"settings.keepGames.help" = "تبقى الألعاب تعمل حتى لو حذفت الملف الأصلي الذي نزّلته. على القرص نفسه لا يستهلك ذلك أي مساحة إضافية.";
+"settings.d3dmetal" = "تقنية D3DMetal من Apple (اختيارية)";
+"settings.d3dmetal.installed" = "تقنية D3DMetal مثبَّتة";
+"settings.d3dmetal.remove" = "إزالة D3DMetal";
+"settings.d3dmetal.about" = "تتيح D3DMetal تشغيل ألعاب DirectX 12. لا تسمح Apple بتضمينها في التطبيق، لذا نزّل «Game Porting Toolkit» المجانية من Apple بحسابك، ثم استورد ملف ‎.dmg‎ هنا.";
+"settings.d3dmetal.download" = "التنزيل من Apple";
+"settings.d3dmetal.import" = "استيراد…";
+"settings.checks" = "الفحوصات التلقائية";
+"settings.blackScreen" = "اكتشاف الشاشة السوداء تلقائيًا";
+"settings.blackScreen.help" = "ينظر حلال واين إلى نافذة اللعبة ليكتشف الشاشة السوداء ويجرّب إعدادات أخرى. يتطلب إذن «تسجيل الشاشة»، ولا يُحفظ أو يُرسل أي شيء.";
+"settings.metalHUD" = "إظهار معدّل الإطارات (Metal HUD)";
+"settings.runtime.version" = "إصدار المحرّك";
+"settings.runtime.backends" = "طبقات الرسوميات";
+"settings.runtime.none" = "غير مثبَّت";
+"settings.runtime.update" = "الإصدار %@ متوفّر.";
+"settings.runtime.updateNow" = "تحديث";
+"settings.runtime.check" = "التحقق من التحديثات";
+"settings.runtime.openFolder" = "فتح مجلد البيانات";
+"settings.about.version" = "الإصدار %@";
+"settings.about.credits" = "مجاني ومفتوح المصدر، مبني على Wine وDXMT وDXVK وMoltenVK. أما D3DMetal فهي ملك Apple وتستوردها أنت بنفسك.";
+"settings.about.source" = "الشيفرة المصدرية على GitHub";
+
+/* استيراد D3DMetal */
+"d3dmetal.panel.message" = "اختر ملف ‎.dmg‎ الخاص بـ Game Porting Toolkit الذي نزّلته من Apple";
+"d3dmetal.failed" = "لم نعثر على D3DMetal هناك. اختر ملف ‎.dmg‎ الخاص بـ «Game Porting Toolkit» من موقع Apple.";

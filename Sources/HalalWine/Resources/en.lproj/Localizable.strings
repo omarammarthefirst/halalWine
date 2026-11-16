@@ -1,0 +1,177 @@
+/* halalWine — English */
+
+"app.name" = "halalWine";
+"menu.addGame" = "Add Game…";
+
+/* Common */
+"common.ok" = "OK";
+"common.cancel" = "Cancel";
+"common.close" = "Close";
+"common.tryAgain" = "Try Again";
+"common.save" = "Save";
+"error.title" = "Something went wrong";
+
+/* Setup */
+"setup.welcome.title" = "Welcome to halalWine";
+"setup.welcome.subtitle" = "Play Windows games and run Windows apps on your Mac. Just drag a game folder in — halalWine figures out the rest.";
+"setup.welcome.start" = "Get Started";
+"setup.rosetta.title" = "Install Rosetta";
+"setup.rosetta.subtitle" = "Windows programs are built for Intel processors. Apple's free Rosetta lets your Mac run them. You may be asked for your password.";
+"setup.rosetta.install" = "Install Rosetta";
+"setup.rosetta.installing" = "Installing Rosetta…";
+"setup.rosetta.failed" = "Rosetta could not be installed. Check your internet connection and try again.";
+"setup.runtime.title" = "Download the Windows Engine";
+"setup.runtime.subtitle" = "halalWine needs its Windows engine (Wine with Metal graphics layers). It is about 250 MB and only downloads once.";
+"setup.runtime.download" = "Download";
+"setup.runtime.progress" = "%1$@ of %2$@";
+"setup.runtime.connecting" = "Connecting…";
+"setup.runtime.installing" = "Installing…";
+"setup.runtime.preparing" = "Preparing the Windows environment. This takes about a minute the first time…";
+"setup.runtime.notPublished" = "No Windows engine has been published yet. Please try again later.";
+"setup.runtime.failed" = "The download failed: %@";
+"setup.done.title" = "You're All Set";
+"setup.done.subtitle" = "Drag a Windows game folder, .exe or installer into the window to add it to your library.";
+"setup.done.open" = "Open My Library";
+
+/* Errors */
+"error.save" = "Your library could not be saved: %@";
+"error.noWindowsProgram" = "“%@” doesn't contain a Windows program (.exe).";
+"error.import" = "“%1$@” could not be added: %2$@";
+"error.installerNoGame" = "The installer finished, but no installed game was found. You can drag the installed folder in yourself.";
+"error.installer" = "The installer could not run: %@";
+"error.diagnostics" = "The diagnostics file could not be created: %@";
+
+/* Library */
+"library.title" = "Library";
+"library.add" = "Add Game…";
+"library.add.prompt" = "Add";
+"library.add.message" = "Choose a game folder, a .exe file, an installer or a .zip";
+"library.drop.title" = "Drop a Windows game here";
+"library.drop.subtitle" = "Drag a game folder, a .exe file, an installer or a .zip into this window. halalWine detects the game engine and picks the best graphics settings automatically.";
+"library.drop.release" = "Release to add";
+"library.importing" = "Adding “%@”…";
+"library.status.running" = "Running";
+"library.status.installing" = "Installing…";
+"library.status.missing" = "Files missing";
+"library.status.ready" = "Ready to play";
+
+/* Game */
+"game.play" = "Play";
+"game.showInFinder" = "Show in Finder";
+"game.remove" = "Remove from Library";
+"game.remove.title" = "Remove “%@”?";
+"game.remove.message" = "Its Windows settings and saved data inside halalWine will be deleted.";
+"game.remove.withFiles" = "Remove and Delete Game Files";
+"game.remove.keepFiles" = "Remove, Keep Game Files";
+"game.blocked.title" = "This game probably won't work on a Mac";
+"game.blocked.tryAnyway" = "Try Anyway";
+"game.missing" = "The game's files have been moved or deleted.";
+"game.works.title" = "Works on this Mac with";
+"game.auto.title" = "Automatic setup";
+"game.auto.message" = "When you press Play, halalWine tries the best graphics settings for this game, checks that it starts, and remembers what works.";
+"game.advanced" = "Advanced";
+"game.windowed" = "Start in a window (recommended)";
+"game.avx" = "Advertise AVX instructions (needed by some newer games, macOS 15+)";
+"game.arguments" = "Extra launch arguments";
+"game.plan.title" = "Settings halalWine will try";
+"game.plan.try" = "Try";
+"game.plan.needsD3DMetal" = "Needs D3DMetal";
+"game.reset" = "Forget Learned Settings";
+"game.openDriveC" = "Open Windows C: Drive";
+"game.showLog" = "Show Log";
+"game.diagnostics" = "Create Diagnostics File";
+"game.diagnostics.working" = "Creating…";
+
+/* Installers */
+"installer.running.title" = "Installing";
+"installer.running.message" = "Follow the steps in the installer window. halalWine will find the game when it finishes.";
+"installer.notInstalled" = "This is an installer. Run it to install the game.";
+"installer.run" = "Run Installer";
+
+/* Launching */
+"launch.preparing.title" = "Getting ready";
+"launch.preparing.message" = "Preparing a Windows environment for this game…";
+"launch.installing.title" = "Installing a missing component";
+"launch.installing.message" = "The game needs %@. Installing it now…";
+"launch.searching.title" = "Finding the best settings";
+"launch.attempt" = "Attempt %1$@ of %2$@";
+"launch.confirm.title" = "Is the game working?";
+"launch.confirm.message" = "Look at the game window. If you see the game (not a black or frozen window), choose Yes.";
+"launch.confirm.yes" = "Yes, it works";
+"launch.confirm.no" = "No, try other settings";
+"launch.running.title" = "Playing";
+"launch.running.message" = "halalWine remembered these settings for next time.";
+"launch.finished.title" = "Game closed";
+"launch.finished.message" = "The working settings are saved. Press Play to start again.";
+"launch.failed.title" = "The game couldn't be started";
+"launch.failed.message" = "halalWine tried every available setting. Create a diagnostics file from Advanced and share it when asking for help.";
+"launch.blocked.title" = "This game can't run here yet";
+"launch.blocked.steam" = "This game needs Steam to be running. Start it from the Windows version of Steam instead.";
+"launch.blocked.antiCheat" = "This game's anti-cheat system does not work on a Mac.";
+"launch.blocked.noRuntime" = "The Windows engine isn't installed. Open Settings → Engine.";
+"launch.blocked.missingFiles" = "The game's files have been moved or deleted. Remove the game and add it again.";
+"launch.stop" = "Stop";
+
+/* Engines and graphics layers */
+"engine.unknown" = "Unknown";
+"backend.d3dmetal.about" = "Apple's D3DMetal translates DirectX 11 and 12 to Metal. Best for newer games.";
+"backend.dxmt.about" = "DXMT translates DirectX 10 and 11 to Metal. Fast, open source, built in.";
+"backend.dxvk.about" = "DXVK translates DirectX 10 and 11 to Vulkan, which MoltenVK runs on Metal.";
+"backend.wined3d.about" = "Wine's own renderer runs older DirectX and OpenGL games through OpenGL. Most compatible.";
+
+/* Warnings found before playing */
+"flag.easyAntiCheat" = "Uses Easy Anti-Cheat, which blocks Wine. Online play will not work.";
+"flag.battlEye" = "Uses BattlEye anti-cheat, which blocks Wine.";
+"flag.riotVanguard" = "Uses Riot Vanguard, which only runs on Windows.";
+"flag.otherAntiCheat" = "Uses kernel anti-cheat software, which does not work on a Mac.";
+"flag.usesSteam" = "Uses Steam. If it doesn't start, it may need to be launched from Steam.";
+"flag.needsPublisherLauncher" = "Needs the publisher's launcher (such as Ubisoft Connect).";
+"flag.unsupportedArchitecture" = "Built for Windows on ARM, which can't run here.";
+"flag.mayHaveMacVersion" = "Games made with this engine often have a Mac version — check the store first.";
+
+/* Diagnoses */
+"diag.rendererFailed" = "The graphics settings didn't work for this game.";
+"diag.needsVCRedist" = "The game needed the Microsoft Visual C++ runtime.";
+"diag.needsDirectXRuntime" = "The game needed old DirectX components.";
+"diag.needsXNA" = "The game needs Microsoft XNA Framework 4.0.";
+"diag.needsDotNet" = "The game needs the .NET Framework.";
+"diag.needsAVX" = "The game needs AVX instructions. Turn on “Advertise AVX” (macOS 15 or later).";
+"diag.needsSteam" = "The game needs Steam to be running.";
+"diag.antiCheat" = "The game's anti-cheat refused to start.";
+"diag.missingDLL" = "The game is missing %@.";
+
+/* Settings */
+"settings.general" = "General";
+"settings.graphics" = "Graphics";
+"settings.runtime" = "Engine";
+"settings.about" = "About";
+"settings.language" = "Language";
+"settings.language.system" = "Same as macOS";
+"settings.language.restart" = "Restart halalWine to change the language.";
+"settings.language.restartNow" = "Restart Now";
+"settings.keepGames" = "Keep added games inside halalWine";
+"settings.keepGames.help" = "Games keep working even if you delete the original download. On the same disk this uses no extra space.";
+"settings.d3dmetal" = "Apple D3DMetal (optional)";
+"settings.d3dmetal.installed" = "D3DMetal is installed";
+"settings.d3dmetal.remove" = "Remove D3DMetal";
+"settings.d3dmetal.about" = "D3DMetal makes DirectX 12 games run. Apple doesn't allow it to be bundled, so download Apple's free “Game Porting Toolkit” with your Apple Account, then import the downloaded .dmg here.";
+"settings.d3dmetal.download" = "Download from Apple";
+"settings.d3dmetal.import" = "Import…";
+"settings.checks" = "Automatic checks";
+"settings.blackScreen" = "Detect black screens automatically";
+"settings.blackScreen.help" = "halalWine looks at the game window to spot a black screen and tries other settings. Requires the Screen Recording permission; nothing is saved or sent.";
+"settings.metalHUD" = "Show frame rate (Metal HUD)";
+"settings.runtime.version" = "Engine version";
+"settings.runtime.backends" = "Graphics layers";
+"settings.runtime.none" = "Not installed";
+"settings.runtime.update" = "Version %@ is available.";
+"settings.runtime.updateNow" = "Update";
+"settings.runtime.check" = "Check for Updates";
+"settings.runtime.openFolder" = "Open Data Folder";
+"settings.about.version" = "Version %@";
+"settings.about.credits" = "Free and open source. Built on Wine, DXMT, DXVK and MoltenVK. D3DMetal is Apple's and is imported by you.";
+"settings.about.source" = "Source code on GitHub";
+
+/* D3DMetal import */
+"d3dmetal.panel.message" = "Choose the Game Porting Toolkit .dmg you downloaded from Apple";
+"d3dmetal.failed" = "D3DMetal was not found there. Choose the “Game Porting Toolkit” .dmg from Apple's website.";

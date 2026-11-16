@@ -1,0 +1,3 @@
+"CFBundleDisplayName" = "halalWine";
+"CFBundleName" = "halalWine";
+"NSAppleEventsUsageDescription" = "halalWine asks macOS to install Rosetta, which Windows programs need.";

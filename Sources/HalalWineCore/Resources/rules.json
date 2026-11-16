@@ -1,0 +1,255 @@
+{
+  "version": 1,
+  "defaults": {
+    "environment": {
+      "WINEDEBUG": "fixme-all",
+      "WINEESYNC": "1",
+      "WINEMSYNC": "1"
+    },
+    "backendEnvironment": {
+      "dxvk": { "DXVK_ASYNC": "1" },
+      "dxmt": {},
+      "d3dmetal": {},
+      "wined3d": {}
+    }
+  },
+  "rules": [
+    {
+      "id": "godot4-compatibility",
+      "match": { "engine": "godot", "engineMajor": 4, "renderingMethod": ["gl_compatibility"] },
+      "windowedArguments": ["--windowed"],
+      "steps": [
+        { "id": "godot4-wined3d-opengl3", "backend": "wined3d", "arguments": ["--rendering-driver", "opengl3"] },
+        { "id": "godot4-dxmt-angle", "backend": "dxmt", "arguments": ["--rendering-driver", "opengl3_angle"] },
+        { "id": "godot4-d3dmetal-angle", "backend": "d3dmetal", "arguments": ["--rendering-driver", "opengl3_angle"] }
+      ]
+    },
+    {
+      "id": "godot4-early",
+      "match": { "engine": "godot", "engineMajor": 4, "versionBelow": "4.3" },
+      "windowedArguments": ["--windowed"],
+      "steps": [
+        { "id": "godot4-wined3d-opengl3", "backend": "wined3d", "arguments": ["--rendering-driver", "opengl3"] },
+        { "id": "godot4-wined3d-vulkan", "backend": "wined3d", "arguments": ["--rendering-driver", "vulkan"] },
+        { "id": "godot4-dxmt-angle", "backend": "dxmt", "arguments": ["--rendering-driver", "opengl3_angle"] }
+      ]
+    },
+    {
+      "id": "godot4",
+      "match": { "engine": "godot", "engineMajor": 4 },
+      "windowedArguments": ["--windowed"],
+      "steps": [
+        { "id": "godot4-d3dmetal-d3d12", "backend": "d3dmetal", "arguments": ["--rendering-driver", "d3d12"] },
+        { "id": "godot4-wined3d-opengl3", "backend": "wined3d", "arguments": ["--rendering-driver", "opengl3"] },
+        { "id": "godot4-dxmt-angle", "backend": "dxmt", "arguments": ["--rendering-driver", "opengl3_angle"] },
+        { "id": "godot4-wined3d-vulkan", "backend": "wined3d", "arguments": ["--rendering-driver", "vulkan"] }
+      ]
+    },
+    {
+      "id": "godot3",
+      "match": { "engine": "godot", "engineMajor": 3 },
+      "windowedArguments": ["--windowed"],
+      "steps": [
+        { "id": "godot3-gles3", "backend": "wined3d", "arguments": ["--video-driver", "GLES3"] },
+        { "id": "godot3-gles2", "backend": "wined3d", "arguments": ["--video-driver", "GLES2"] }
+      ]
+    },
+    {
+      "id": "godot-unknown-version",
+      "match": { "engine": "godot" },
+      "windowedArguments": ["--windowed"],
+      "steps": [
+        { "id": "godot4-d3dmetal-d3d12", "backend": "d3dmetal", "arguments": ["--rendering-driver", "d3d12"] },
+        { "id": "godot4-wined3d-opengl3", "backend": "wined3d", "arguments": ["--rendering-driver", "opengl3"] },
+        { "id": "godot4-dxmt-angle", "backend": "dxmt", "arguments": ["--rendering-driver", "opengl3_angle"] },
+        { "id": "godot-wined3d-default", "backend": "wined3d" }
+      ]
+    },
+    {
+      "id": "unity",
+      "match": { "engine": "unity" },
+      "windowedArguments": ["-screen-fullscreen", "0"],
+      "steps": [
+        { "id": "unity-dxmt-d3d11", "backend": "dxmt", "arguments": ["-force-d3d11"] },
+        { "id": "unity-d3dmetal-d3d11", "backend": "d3dmetal", "arguments": ["-force-d3d11"] },
+        { "id": "unity-d3dmetal-d3d12", "backend": "d3dmetal", "arguments": ["-force-d3d12"] },
+        { "id": "unity-dxvk-d3d11", "backend": "dxvk", "arguments": ["-force-d3d11"] },
+        { "id": "unity-wined3d-glcore", "backend": "wined3d", "arguments": ["-force-glcore"] },
+        { "id": "unity-wined3d-d3d11", "backend": "wined3d", "arguments": ["-force-d3d11"] }
+      ]
+    },
+    {
+      "id": "unreal-d3d12",
+      "match": { "engine": "unreal", "primaryAPI": ["d3d12"] },
+      "windowedArguments": ["-windowed"],
+      "steps": [
+        { "id": "unreal-d3dmetal-dx12", "backend": "d3dmetal", "arguments": ["-dx12"] },
+        { "id": "unreal-dxmt-dx11", "backend": "dxmt", "arguments": ["-dx11"] },
+        { "id": "unreal-d3dmetal-dx11", "backend": "d3dmetal", "arguments": ["-dx11"] },
+        { "id": "unreal-dxvk-dx11", "backend": "dxvk", "arguments": ["-dx11"] }
+      ]
+    },
+    {
+      "id": "unreal",
+      "match": { "engine": "unreal" },
+      "windowedArguments": ["-windowed"],
+      "steps": [
+        { "id": "unreal-dxmt-dx11", "backend": "dxmt", "arguments": ["-dx11"] },
+        { "id": "unreal-d3dmetal-dx11", "backend": "d3dmetal", "arguments": ["-dx11"] },
+        { "id": "unreal-d3dmetal-dx12", "backend": "d3dmetal", "arguments": ["-dx12"] },
+        { "id": "unreal-dxvk-dx11", "backend": "dxvk", "arguments": ["-dx11"] },
+        { "id": "unreal-wined3d-dx11", "backend": "wined3d", "arguments": ["-dx11"] }
+      ]
+    },
+    {
+      "id": "gamemaker-legacy",
+      "match": { "engine": "gameMaker", "primaryAPI": ["d3d9"] },
+      "steps": [
+        { "id": "gamemaker-wined3d", "backend": "wined3d" }
+      ]
+    },
+    {
+      "id": "gamemaker",
+      "match": { "engine": "gameMaker" },
+      "steps": [
+        { "id": "gamemaker-dxmt", "backend": "dxmt" },
+        { "id": "gamemaker-wined3d", "backend": "wined3d" },
+        { "id": "gamemaker-d3dmetal", "backend": "d3dmetal" },
+        { "id": "gamemaker-dxvk", "backend": "dxvk" }
+      ]
+    },
+    {
+      "id": "rpgmaker-mv-mz",
+      "match": { "engine": "rpgMakerMV" },
+      "steps": [
+        { "id": "chromium-dxmt", "backend": "dxmt" },
+        { "id": "chromium-wined3d", "backend": "wined3d" },
+        { "id": "chromium-software", "backend": "wined3d", "arguments": ["--disable-gpu"] }
+      ]
+    },
+    {
+      "id": "nwjs",
+      "match": { "engine": "nwjs" },
+      "steps": [
+        { "id": "chromium-dxmt", "backend": "dxmt" },
+        { "id": "chromium-wined3d", "backend": "wined3d" },
+        { "id": "chromium-software", "backend": "wined3d", "arguments": ["--disable-gpu"] }
+      ]
+    },
+    {
+      "id": "electron",
+      "match": { "engine": "electron" },
+      "steps": [
+        { "id": "chromium-dxmt", "backend": "dxmt" },
+        { "id": "chromium-wined3d", "backend": "wined3d" },
+        { "id": "chromium-software", "backend": "wined3d", "arguments": ["--disable-gpu"] }
+      ]
+    },
+    {
+      "id": "rpgmaker-classic",
+      "match": { "engine": "rpgMakerClassic" },
+      "steps": [
+        { "id": "rpgmaker-classic-wined3d", "backend": "wined3d" }
+      ]
+    },
+    {
+      "id": "renpy",
+      "match": { "engine": "renPy" },
+      "steps": [
+        { "id": "renpy-gl2", "backend": "wined3d", "environment": { "RENPY_RENDERER": "gl2" } },
+        { "id": "renpy-angle2", "backend": "dxmt", "environment": { "RENPY_RENDERER": "angle2" } },
+        { "id": "renpy-gl", "backend": "wined3d", "environment": { "RENPY_RENDERER": "gl" } }
+      ]
+    },
+    {
+      "id": "fna",
+      "match": { "engine": "fna" },
+      "steps": [
+        { "id": "fna-opengl", "backend": "wined3d", "environment": { "FNA3D_FORCE_DRIVER": "OpenGL" } },
+        { "id": "fna-d3d11", "backend": "dxmt", "environment": { "FNA3D_FORCE_DRIVER": "D3D11" } },
+        { "id": "fna-vulkan", "backend": "wined3d", "environment": { "FNA3D_FORCE_DRIVER": "Vulkan" } }
+      ]
+    },
+    {
+      "id": "monogame-dx",
+      "match": { "engine": "monoGame", "primaryAPI": ["d3d11"] },
+      "steps": [
+        { "id": "monogame-dxmt", "backend": "dxmt" },
+        { "id": "monogame-d3dmetal", "backend": "d3dmetal" },
+        { "id": "monogame-wined3d", "backend": "wined3d" }
+      ]
+    },
+    {
+      "id": "monogame-gl",
+      "match": { "engine": "monoGame" },
+      "steps": [
+        { "id": "monogame-wined3d", "backend": "wined3d" }
+      ]
+    },
+    {
+      "id": "xna",
+      "match": { "engine": "xna" },
+      "steps": [
+        { "id": "xna-wined3d", "backend": "wined3d" }
+      ]
+    },
+    {
+      "id": "source",
+      "match": { "engine": "source" },
+      "windowedArguments": ["-windowed"],
+      "steps": [
+        { "id": "source-wined3d", "backend": "wined3d" }
+      ]
+    },
+    {
+      "id": "source2",
+      "match": { "engine": "source2" },
+      "steps": [
+        { "id": "source2-dxmt", "backend": "dxmt" },
+        { "id": "source2-d3dmetal", "backend": "d3dmetal" },
+        { "id": "source2-vulkan", "backend": "wined3d", "arguments": ["-vulkan"] }
+      ]
+    },
+    {
+      "id": "opengl-engines",
+      "match": { "primaryAPI": ["opengl", "vulkan"] },
+      "steps": [
+        { "id": "gl-wined3d", "backend": "wined3d" }
+      ]
+    },
+    {
+      "id": "api-d3d12",
+      "match": { "primaryAPI": ["d3d12"] },
+      "steps": [
+        { "id": "d3d12-d3dmetal", "backend": "d3dmetal" },
+        { "id": "d3d12-wined3d-vkd3d", "backend": "wined3d" }
+      ]
+    },
+    {
+      "id": "api-d3d11",
+      "match": { "primaryAPI": ["d3d11", "d3d10"] },
+      "steps": [
+        { "id": "d3d11-dxmt", "backend": "dxmt" },
+        { "id": "d3d11-d3dmetal", "backend": "d3dmetal" },
+        { "id": "d3d11-dxvk", "backend": "dxvk" },
+        { "id": "d3d11-wined3d", "backend": "wined3d" }
+      ]
+    },
+    {
+      "id": "api-d3d9-and-older",
+      "match": { "primaryAPI": ["d3d9", "legacyDirectX"] },
+      "steps": [
+        { "id": "d3d9-wined3d", "backend": "wined3d" }
+      ]
+    },
+    {
+      "id": "fallback",
+      "match": {},
+      "steps": [
+        { "id": "fallback-dxmt", "backend": "dxmt" },
+        { "id": "fallback-wined3d", "backend": "wined3d" },
+        { "id": "fallback-d3dmetal", "backend": "d3dmetal" }
+      ]
+    }
+  ]
+}

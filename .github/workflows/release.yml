@@ -1,0 +1,49 @@
+name: Release app
+
+# Push a tag like v0.1.0 to build the app and attach the .dmg to a release.
+# Add these repository secrets to sign and notarize (recommended for public
+# downloads): DEVELOPER_ID_CERT_P12 (base64), DEVELOPER_ID_CERT_PASSWORD,
+# DEVELOPER_ID, APPLE_ID, APPLE_TEAM_ID, APPLE_APP_PASSWORD.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: macos-15
+    env:
+      HAS_CERT: ${{ secrets.DEVELOPER_ID_CERT_P12 != '' }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Import signing certificate
+        if: env.HAS_CERT == 'true'
+        env:
+          CERT: ${{ secrets.DEVELOPER_ID_CERT_P12 }}
+          CERT_PASSWORD: ${{ secrets.DEVELOPER_ID_CERT_PASSWORD }}
+        run: |
+          echo "$CERT" | base64 --decode > cert.p12
+          security create-keychain -p ci build.keychain
+          security default-keychain -s build.keychain
+          security unlock-keychain -p ci build.keychain
+          security import cert.p12 -k build.keychain -P "$CERT_PASSWORD" -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple: -s -k ci build.keychain
+          rm cert.p12
+      - name: Build
+        env:
+          VERSION: ${{ github.ref_name }}
+          BUILD_NUMBER: ${{ github.run_number }}
+          DEVELOPER_ID: ${{ secrets.DEVELOPER_ID }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPLE_APP_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
+        run: VERSION="${VERSION#v}" scripts/build-app.sh
+      - name: Publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" dist/*.dmg --title "halalWine ${GITHUB_REF_NAME}" \
+            --notes "حمّل ملف ‎.dmg‎ واسحب حلال واين إلى مجلد التطبيقات. — Download the .dmg and drag halalWine to Applications." \
+            --latest

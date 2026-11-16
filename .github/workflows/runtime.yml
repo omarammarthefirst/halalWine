@@ -1,0 +1,66 @@
+name: Publish Windows engine (runtime)
+
+# Builds the runtime the app downloads on first launch and publishes it as a
+# GitHub release, then updates Runtime/manifest.json so the app finds it.
+on:
+  workflow_dispatch:
+    inputs:
+      wine_version:
+        description: "Gcenx macOS Wine build tag (e.g. 11.21)"
+        default: "11.21"
+      wine_flavor:
+        description: "devel or staging"
+        default: "devel"
+      dxmt_version:
+        description: "DXMT release tag"
+        default: "v0.80"
+      dxvk_tag:
+        description: "DXVK-macOS release tag (empty = skip)"
+        default: "v1.10.3-20230507"
+      revision:
+        description: "Runtime revision (bump to republish the same Wine version)"
+        default: "1"
+
+permissions:
+  contents: write
+
+jobs:
+  runtime:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rosetta (for the smoke test)
+        run: sudo softwareupdate --install-rosetta --agree-to-license || true
+      - name: Build runtime
+        env:
+          GH_TOKEN: ${{ github.token }}
+          WINE_VERSION: ${{ inputs.wine_version }}
+          WINE_FLAVOR: ${{ inputs.wine_flavor }}
+          DXMT_VERSION: ${{ inputs.dxmt_version }}
+          DXVK_TAG: ${{ inputs.dxvk_tag }}
+          REVISION: ${{ inputs.revision }}
+        run: scripts/build-runtime.sh
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          source dist/runtime.env
+          gh release delete "runtime-$VERSION" --yes --cleanup-tag 2>/dev/null || true
+          {
+            echo "محرّك ويندوز لتطبيق حلال واين — Windows engine for halalWine"
+            echo
+            echo '```'
+            cat dist/RUNTIME-NOTICE.txt
+            echo '```'
+          } > dist/notes.md
+          gh release create "runtime-$VERSION" dist/halalwine-runtime-*.tar.xz dist/RUNTIME-NOTICE.txt \
+            --title "Runtime $VERSION" --notes-file dist/notes.md --latest=false
+      - name: Update manifest
+        run: |
+          source dist/runtime.env
+          python3 scripts/update-manifest.py dist/runtime-entry.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Runtime/manifest.json
+          git commit -m "Publish runtime $VERSION"
+          git push
