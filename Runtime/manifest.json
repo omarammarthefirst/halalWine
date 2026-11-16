@@ -2,6 +2,18 @@
   "schema": 1,
   "runtimes": [
     {
+      "version": "2026.11.16.1",
+      "wineVersion": "11.19",
+      "url": "https://github.com/omarammarthefirst/halalWine/releases/download/runtime-2026.11.16.1/halalwine-runtime-2026.11.16.1.tar.xz",
+      "sha256": "5aaed876f588da4729dc444dcc94cf8d887a91d531d539463aa21e3f3949b721",
+      "size": 317240228,
+      "components": {
+        "wine": "CrossOver-based Wine (frankea/Whisky engine v4.8.3)",
+        "dxmt": "0.80",
+        "dxvk": "1.10.3"
+      }
+    },
+    {
       "version": "11.21-1",
       "wineVersion": "11.21",
       "url": "https://github.com/omarammarthefirst/halalWine/releases/download/runtime-11.21-1/halalwine-runtime-11.21-1.tar.xz",
