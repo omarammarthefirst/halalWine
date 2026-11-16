@@ -1,4 +1,17 @@
 {
   "schema": 1,
-  "runtimes": []
+  "runtimes": [
+    {
+      "version": "11.21-1",
+      "wineVersion": "11.21",
+      "url": "https://github.com/omarammarthefirst/halalWine/releases/download/runtime-11.21-1/halalwine-runtime-11.21-1.tar.xz",
+      "sha256": "05984d67e67567ea0fd7c6e83e9601271f26abfb31673f93b441062e5de04a57",
+      "size": 267864480,
+      "components": {
+        "wine": "devel 11.21",
+        "dxmt": "v0.80",
+        "dxvk": "v1.10.3-20230507"
+      }
+    }
+  ]
 }
