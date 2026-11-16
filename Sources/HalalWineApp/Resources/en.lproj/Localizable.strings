@@ -78,6 +78,7 @@
 "game.plan.title" = "Settings halalWine will try";
 "game.plan.try" = "Try";
 "game.plan.needsD3DMetal" = "Needs D3DMetal";
+"game.plan.notInEngine" = "Not in this engine — update it in Settings";
 "game.reset" = "Forget Learned Settings";
 "game.openDriveC" = "Open Windows C: Drive";
 "game.showLog" = "Show Log";
@@ -170,7 +171,7 @@
 "settings.runtime.updateNow" = "Update";
 "settings.runtime.check" = "Check for Updates";
 "settings.runtime.openFolder" = "Open Data Folder";
-"settings.about.version" = "Version %@";
+"settings.about.version" = "Version %1$@ (build %2$@)";
 "settings.about.credits" = "Free and open source. Built on Wine, DXMT, DXVK and MoltenVK. D3DMetal is Apple's and is imported by you.";
 "settings.about.source" = "Source code on GitHub";
 

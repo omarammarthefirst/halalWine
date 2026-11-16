@@ -188,7 +188,8 @@ struct GameDetailView: View {
                         Text(config.summary).font(.callout.monospaced()).foregroundStyle(.secondary)
                             .environment(\.layoutDirection, .leftToRight)
                         Spacer()
-                        Text(L("game.plan.needsD3DMetal")).font(.caption).foregroundStyle(.secondary)
+                        Text(config.backend == .d3dmetal ? L("game.plan.needsD3DMetal") : L("game.plan.notInEngine"))
+                            .font(.caption).foregroundStyle(.secondary)
                     }
                 }
 

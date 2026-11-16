@@ -133,7 +133,9 @@ private struct AboutSettings: View {
                 .font(.system(size: 48))
                 .foregroundStyle(Color.accentColor)
             Text(L("app.name")).font(.title.weight(.semibold))
-            Text(L("settings.about.version", Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "dev"))
+            Text(L("settings.about.version",
+                   Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "dev",
+                   Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "0"))
                 .foregroundStyle(.secondary)
             Text(L("settings.about.credits"))
                 .font(.callout)

@@ -78,6 +78,7 @@
 "game.plan.title" = "الإعدادات التي سيجرّبها حلال واين";
 "game.plan.try" = "جرّب";
 "game.plan.needsD3DMetal" = "يتطلب D3DMetal";
+"game.plan.notInEngine" = "غير متوفر في هذا المحرّك — حدّثه من الإعدادات";
 "game.reset" = "نسيان الإعدادات المحفوظة";
 "game.openDriveC" = "فتح القرص C: الخاص بويندوز";
 "game.showLog" = "عرض السجل";
@@ -170,7 +171,7 @@
 "settings.runtime.updateNow" = "تحديث";
 "settings.runtime.check" = "التحقق من التحديثات";
 "settings.runtime.openFolder" = "فتح مجلد البيانات";
-"settings.about.version" = "الإصدار %@";
+"settings.about.version" = "الإصدار %1$@ (البناء %2$@)";
 "settings.about.credits" = "مجاني ومفتوح المصدر، مبني على Wine وDXMT وDXVK وMoltenVK. أما D3DMetal فهي ملك Apple وتستوردها أنت بنفسك.";
 "settings.about.source" = "الشيفرة المصدرية على GitHub";
 
