@@ -20,6 +20,8 @@ jobs:
     runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Toolchain
         run: |
           sw_vers
@@ -30,9 +32,7 @@ jobs:
       - name: Core tests
         run: swift test
       - name: Build app and disk image
-        env:
-          BUILD_NUMBER: ${{ github.run_number }}
-        run: scripts/build-app.sh
+        run: BUILD_NUMBER="$(git rev-list --count HEAD)" scripts/build-app.sh
       - name: Smoke-test the packaged app
         run: scripts/smoke-test-app.sh
       - uses: actions/upload-artifact@v4

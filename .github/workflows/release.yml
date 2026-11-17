@@ -18,6 +18,8 @@ jobs:
       HAS_CERT: ${{ secrets.DEVELOPER_ID_CERT_P12 != '' }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Import signing certificate
         if: env.HAS_CERT == 'true'
         env:
@@ -34,16 +36,20 @@ jobs:
       - name: Build
         env:
           VERSION: ${{ github.ref_name }}
-          BUILD_NUMBER: ${{ github.run_number }}
           DEVELOPER_ID: ${{ secrets.DEVELOPER_ID }}
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
           APPLE_APP_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
-        run: VERSION="${VERSION#v}" scripts/build-app.sh
+        run: VERSION="${VERSION#v}" BUILD_NUMBER="$(git rev-list --count HEAD)" scripts/build-app.sh
       - name: Publish
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "${GITHUB_REF_NAME}" dist/*.dmg --title "halalWine ${GITHUB_REF_NAME}" \
-            --notes "حمّل ملف ‎.dmg‎ واسحب حلال واين إلى مجلد التطبيقات. — Download the .dmg and drag halalWine to Applications." \
-            --latest
+          (cd dist && shasum -a 256 *.dmg > SHA256SUMS.txt && cat SHA256SUMS.txt)
+          NOTES="docs/release-notes/${GITHUB_REF_NAME}.md"
+          if [ ! -f "$NOTES" ]; then
+            echo "حمّل ملف ‎.dmg‎ واسحب حلال واين إلى مجلد التطبيقات. — Download the .dmg and drag halalWine to Applications." > dist/notes.md
+            NOTES=dist/notes.md
+          fi
+          gh release create "${GITHUB_REF_NAME}" dist/*.dmg dist/SHA256SUMS.txt \
+            --title "halalWine ${GITHUB_REF_NAME#v}" --notes-file "$NOTES" --verify-tag --latest
