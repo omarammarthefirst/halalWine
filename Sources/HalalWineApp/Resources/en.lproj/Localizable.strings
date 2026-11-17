@@ -87,7 +87,10 @@
 
 /* Installers */
 "installer.running.title" = "Installing";
-"installer.running.message" = "Follow the steps in the installer window. halalWine will find the game when it finishes.";
+"installer.running.message" = "Follow the steps in the installer window. Can't see it? Look for its icon in the Dock. When it finishes, halalWine adds the game.";
+"installer.waiting.title" = "The installer has closed";
+"installer.waiting.message" = "Something it started is still open — often the game itself. Close it, or press “Finished installing”.";
+"installer.finished" = "Finished installing";
 "installer.notInstalled" = "This is an installer. Run it to install the game.";
 "installer.run" = "Run Installer";
 

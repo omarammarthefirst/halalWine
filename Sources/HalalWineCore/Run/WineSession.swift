@@ -12,6 +12,8 @@ public final class WineSession: @unchecked Sendable {
     public var onLine: (@Sendable (String) -> Void)?
     /// Called once when all Wine processes for the prefix have ended.
     public var onEnd: (@Sendable (_ exitCode: Int32) -> Void)?
+    /// Called when the first process exits (other Wine processes may live on).
+    public var onProcessExit: (@Sendable (_ exitCode: Int32) -> Void)?
 
     private let process = Process()
     private let lock = NSLock()
@@ -91,7 +93,11 @@ public final class WineSession: @unchecked Sendable {
     }
 
     private func processExited(code: Int32) {
-        lock.locked { exitCode = code }
+        let callback = lock.locked { () -> (@Sendable (Int32) -> Void)? in
+            exitCode = code
+            return onProcessExit
+        }
+        callback?(code)
         // The first process is gone; wait until the prefix is empty.
         let env = WineEnvironment.make(wineRoot: command.wineRoot, prefix: command.prefix)
         let wineserver = InstalledRuntime.wineserverBinary(in: command.wineRoot)

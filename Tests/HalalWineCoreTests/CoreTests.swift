@@ -177,6 +177,19 @@ final class InspectorTests: XCTestCase {
         XCTAssertEqual(report.kind, .installer)
     }
 
+    func testInstallLocationsFindCommonAndCustomFolders() throws {
+        let prefix = try Fixtures.tree([
+            "drive_c/windows/system32/kernel32.dll": [0],
+            "drive_c/Program Files/Common Files/x.dll": [0],
+            "drive_c/Program Files (x86)/Cool Game/Cool.exe": [0],
+            "drive_c/GOG Games/Retro/Retro.exe": [0],
+            "drive_c/users/me/AppData/Local/Programs/itch-game/game.exe": [0],
+            "drive_c/MyGame/game.exe": [0],
+        ], folderName: "pfx")
+        let names = GameInspector.installLocations(inPrefix: prefix).map(\.lastPathComponent)
+        XCTAssertEqual(names, ["Cool Game", "Retro", "itch-game", "MyGame"])
+    }
+
     func testCleanName() {
         XCTAssertEqual(GameInspector.cleanName("Slay.the.Spire.2.v0.111.0"), "Slay the Spire 2")
         XCTAssertEqual(GameInspector.cleanName("Hollow_Knight_v1.5.78"), "Hollow Knight")

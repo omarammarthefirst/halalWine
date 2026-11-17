@@ -82,19 +82,26 @@ public struct GameInspector {
 
     /// Top-level folders an installer may have created inside a Wine prefix.
     public static func installLocations(inPrefix prefix: URL) -> [URL] {
-        let driveC = prefix.appendingPathComponent("drive_c")
-        let parents = ["Program Files", "Program Files (x86)", "GOG Games", "Games", "Epic Games"]
-            .map { driveC.appendingPathComponent($0) }
-        var result: [URL] = []
         let fm = FileManager.default
-        for parent in parents {
-            guard let items = try? fm.contentsOfDirectory(at: parent, includingPropertiesForKeys: [.isDirectoryKey]) else { continue }
-            for item in items where (try? item.resourceValues(forKeys: [.isDirectoryKey]).isDirectory) == true {
-                if ["common files", "internet explorer", "windows media player", "windows nt", "microsoft.net"]
-                    .contains(item.lastPathComponent.lowercased()) { continue }
-                result.append(item)
+        let driveC = prefix.appendingPathComponent("drive_c")
+        let commonParents = ["Program Files", "Program Files (x86)", "GOG Games", "Games", "Epic Games"]
+        var parents = commonParents.map { driveC.appendingPathComponent($0) }
+        // Per-user installs (itch.io, Electron apps, ...).
+        for user in (try? fm.contentsOfDirectory(at: driveC.appendingPathComponent("users"), includingPropertiesForKeys: nil)) ?? [] {
+            parents.append(user.appendingPathComponent("AppData/Local/Programs"))
+        }
+        let skip: Set<String> = ["common files", "internet explorer", "windows media player", "windows nt",
+                                 "microsoft.net", "windowspowershell", "windows defender", "wine"]
+        func directories(in parent: URL) -> [URL] {
+            ((try? fm.contentsOfDirectory(at: parent, includingPropertiesForKeys: [.isDirectoryKey])) ?? []).filter {
+                (try? $0.resourceValues(forKeys: [.isDirectoryKey]).isDirectory) == true
+                    && !skip.contains($0.lastPathComponent.lowercased())
             }
         }
+        var result = parents.flatMap(directories(in:))
+        // Custom folders straight on C: (e.g. C:\MyGame), checked last.
+        let systemFolders = Set((["windows", "users", "programdata"] + commonParents).map { $0.lowercased() })
+        result += directories(in: driveC).filter { !systemFolders.contains($0.lastPathComponent.lowercased()) }
         return result
     }
 

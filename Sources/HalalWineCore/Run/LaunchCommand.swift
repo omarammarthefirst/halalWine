@@ -28,6 +28,16 @@ public struct LaunchCommand: Sendable, Equatable {
     public var workingDirectory: URL
     public var wineRoot: URL
     public var prefix: URL
+
+    public init(executable: URL, arguments: [String], environment: [String: String],
+                workingDirectory: URL, wineRoot: URL, prefix: URL) {
+        self.executable = executable
+        self.arguments = arguments
+        self.environment = environment
+        self.workingDirectory = workingDirectory
+        self.wineRoot = wineRoot
+        self.prefix = prefix
+    }
 }
 
 public enum LaunchCommandBuilder {

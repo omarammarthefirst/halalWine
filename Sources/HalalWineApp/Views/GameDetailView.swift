@@ -89,9 +89,15 @@ struct GameDetailView: View {
 
     @ViewBuilder
     private var playArea: some View {
-        if model.installersRunning.contains(game.id) {
-            StatusCard(systemImage: "shippingbox", tint: .accentColor, title: L("installer.running.title"),
-                       message: L("installer.running.message"), showsProgress: true)
+        if let status = model.installers[game.id] {
+            StatusCard(systemImage: "shippingbox", tint: .accentColor,
+                       title: status == .waitingForClose ? L("installer.waiting.title") : L("installer.running.title"),
+                       message: status == .waitingForClose ? L("installer.waiting.message") : L("installer.running.message"),
+                       showsProgress: true) {
+                Button(L("installer.finished")) { model.finishInstaller(game.id) }
+                    .buttonStyle(.borderedProminent)
+                Button(L("common.cancel"), role: .destructive) { model.cancelInstaller(game.id) }
+            }
         } else if game.report.kind == .installer {
             HStack {
                 Text(L("installer.notInstalled")).foregroundStyle(.secondary)

@@ -24,7 +24,12 @@ final class AppModel {
     var showSetup: Bool
     var availableRuntimeUpdate: RuntimeRelease?
     var controllers: [UUID: LaunchController] = [:]
-    var installersRunning: Set<UUID> = []
+    var installers: [UUID: InstallerStatus] = [:]
+    var installersRunning: Set<UUID> { Set(installers.keys) }
+    @ObservationIgnored private var installerSessions: [UUID: WineSession] = [:]
+    @ObservationIgnored private var installerEnded = Set<UUID>()
+    @ObservationIgnored private var installerFinishRequested = Set<UUID>()
+    @ObservationIgnored private var installerCancelled = Set<UUID>()
     var d3dmetalImporting = false
 
     // Preferences (also bound with @AppStorage in views).
@@ -230,24 +235,55 @@ final class AppModel {
 
     /// Runs a dropped installer inside the game's own prefix, then finds the
     /// installed game and turns the library entry into it.
+    ///
+    /// Finishes when every Windows program in the prefix has closed, when the
+    /// player presses "Finished installing" (e.g. the installer started the
+    /// game itself), or on Cancel.
     func runInstaller(_ id: UUID) async {
-        guard let runtime, let record = game(id) else { return }
-        installersRunning.insert(id)
-        defer { installersRunning.remove(id) }
+        guard let runtime, let record = game(id), installers[id] == nil else { return }
+        installers[id] = .starting
+        installerEnded.remove(id)
+        installerFinishRequested.remove(id)
+        installerCancelled.remove(id)
+        defer {
+            installers[id] = nil
+            installerSessions[id] = nil
+        }
         do {
             let prefix = try await PrefixManager(paths: paths).ensurePrefix(for: id, runtime: runtime)
             let before = Set(GameInspector.installLocations(inPrefix: prefix).map(\.path))
             let wineRoot = runtime.baseWine
-            let env = WineEnvironment.make(wineRoot: wineRoot, prefix: prefix)
+            var env = WineEnvironment.make(wineRoot: wineRoot, prefix: prefix)
+            env["WINEDEBUG"] = "fixme-all"
             let exe = record.executableURL
             let args = exe.pathExtension.lowercased() == "msi"
                 ? ["msiexec", "/i", DependencyInstaller.windowsPath(exe)]
                 : [exe.path]
-            let log = paths.logs.appendingPathComponent("\(id.uuidString)-installer.log")
-            try await ProcessRunner.run(InstalledRuntime.wineBinary(in: wineRoot), args, environment: env,
-                                        currentDirectory: exe.deletingLastPathComponent(), logFile: log, timeout: 6 * 3600)
-            try await ProcessRunner.run(InstalledRuntime.wineserverBinary(in: wineRoot), ["-w"], environment: env,
-                                        logFile: log, timeout: 600)
+            let command = LaunchCommand(executable: InstalledRuntime.wineBinary(in: wineRoot), arguments: args,
+                                        environment: env, workingDirectory: exe.deletingLastPathComponent(),
+                                        wineRoot: wineRoot, prefix: prefix)
+            let session = WineSession(command: command,
+                                      logURL: paths.logs.appendingPathComponent("\(id.uuidString)-installer.log"))
+            session.onProcessExit = { _ in
+                Task { @MainActor in
+                    if AppModel.shared.installers[id] != nil { AppModel.shared.installers[id] = .waitingForClose }
+                }
+            }
+            session.onEnd = { _ in
+                Task { @MainActor in _ = AppModel.shared.installerEnded.insert(id) }
+            }
+            try session.start()
+            installerSessions[id] = session
+            installers[id] = .running
+
+            while !installerEnded.contains(id), !installerFinishRequested.contains(id), !installerCancelled.contains(id) {
+                try? await Task.sleep(nanoseconds: 500_000_000)
+            }
+            if installerCancelled.contains(id) {
+                await session.terminate()
+                return
+            }
+
             let created = GameInspector.installLocations(inPrefix: prefix).filter { !before.contains($0.path) }
             for folder in created {
                 guard let report = try? GameInspector().inspect(folder), report.kind == .game else { continue }
@@ -263,6 +299,12 @@ final class AppModel {
             errorMessage = L("error.installer", error.localizedDescription)
         }
     }
+
+    /// The player says the installer is done (it may have started the game).
+    func finishInstaller(_ id: UUID) { installerFinishRequested.insert(id) }
+
+    /// Stops the installer and everything it started.
+    func cancelInstaller(_ id: UUID) { installerCancelled.insert(id) }
 
     // MARK: - Playing
 
@@ -330,6 +372,13 @@ final class AppModel {
         try? runtime?.removeD3DMetal()
         runtime = runtimeStore.current
     }
+}
+
+enum InstallerStatus: Equatable {
+    case starting
+    case running
+    /// The installer closed but other Windows programs it started are still open.
+    case waitingForClose
 }
 
 enum Prefs {
